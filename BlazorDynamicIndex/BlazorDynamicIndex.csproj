@@ -7,11 +7,28 @@
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Authors>fleischa</Authors>
 		<PackageProjectUrl>https://github.com/fleischa/BlazorDynamicIndex</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/fleischa/BlazorDynamicIndex</RepositoryUrl>
+		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<VersionPrefix>0.9.1</VersionPrefix>
+		<Version>$(VersionPrefix)-alpha</Version>
+		<AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
+		<FileVersion>$(VersionPrefix)</FileVersion>
+		<PackageTags>aspnetcore, components, blazor</PackageTags>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.*" />
+	  <None Include="..\LICENSE.txt">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
 
 </Project>
