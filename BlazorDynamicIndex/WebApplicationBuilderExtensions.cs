@@ -1,23 +1,18 @@
 ﻿namespace BlazorDynamicIndex;
 
+using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
-using System.Text;
 
 public static class WebApplicationBuilderExtensions
 {
-	public static async Task GenerateDynamicIndex(this WebApplicationBuilder builder, Action<DynamicIndexConfiguration>? overrideIndexConfiguration = null, Action<DynamicIndexOptions>? configureOptions = null)
+	public static async Task GenerateDynamicIndex(this WebApplicationBuilder builder,
+		Action<DynamicIndexConfiguration>? overrideIndexConfiguration = null,
+		Action<DynamicIndexOptions>? configureOptions = null)
 	{
 		DynamicIndexOptions options = new();
-
-		if (configureOptions != null)
-		{
-			configureOptions(options);
-		}
-		else
-		{
-			builder.Configuration.GetSection(DynamicIndexOptions.ConfigurationSection).Bind(options);
-		}
+		builder.Configuration.GetSection(DynamicIndexOptions.ConfigurationSection).Bind(options);
+		configureOptions?.Invoke(options);
 
 		string outputPath = Path.Combine(builder.Environment.WebRootPath, options.OutputFile);
 		DynamicIndexConfiguration? indexConfiguration = await DynamicIndexConfiguration.FromFileAsync(options.ConfigurationFile);

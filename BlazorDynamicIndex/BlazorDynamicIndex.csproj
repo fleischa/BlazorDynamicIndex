@@ -4,10 +4,14 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Authors>fleischa</Authors>
+		<PackageProjectUrl>https://github.com/fleischa/BlazorDynamicIndex</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/fleischa/BlazorDynamicIndex</RepositoryUrl>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.12" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.*" />
 	</ItemGroup>
 
 </Project>
