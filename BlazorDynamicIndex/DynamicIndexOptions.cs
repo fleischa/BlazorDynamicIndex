@@ -6,5 +6,5 @@ public class DynamicIndexOptions
 
 	public string? ConfigurationFile { get; set; }
 
-	public string? OutputFile { get; set; }
+	public string? IndexFileName { get; set; } = "index.html";
 }

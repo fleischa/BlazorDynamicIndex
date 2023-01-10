@@ -10,7 +10,7 @@
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<PackageLicenseExpression>Unlicense</PackageLicenseExpression>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<VersionPrefix>0.9.2</VersionPrefix>
+		<VersionPrefix>0.9.3</VersionPrefix>
 		<Version>$(VersionPrefix)-alpha</Version>
 		<AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
 		<FileVersion>$(VersionPrefix)</FileVersion>

@@ -5,7 +5,7 @@ using System.Text;
 
 public static class DynamicIndexGenerator
 {
-	public static async Task<string> Generate(DynamicIndexConfiguration configuration)
+	public static async Task<string> Generate(DynamicIndexConfiguration configuration, string contentRootPath)
 	{
 		StringBuilder builder = new();
 
@@ -88,7 +88,8 @@ public static class DynamicIndexGenerator
 
 		if (!string.IsNullOrEmpty(configuration.BodyFile))
 		{
-			await using FileStream bodyFileStream = File.OpenRead(configuration.BodyFile);
+			string bodyFilePath = Path.Combine(contentRootPath, configuration.BodyFile);
+			await using FileStream bodyFileStream = File.OpenRead(bodyFilePath);
 			using StreamReader bodyStreamReader = new(bodyFileStream, Encoding.UTF8);
 			builder.AppendLine((await bodyStreamReader.ReadToEndAsync()).Trim());
 		}
