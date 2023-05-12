@@ -1,11 +1,12 @@
-﻿namespace BlazorDynamicIndex;
-
-using System.Reflection;
+﻿using System.Reflection;
 using System.Text;
+using Microsoft.Extensions.FileProviders;
+
+namespace BlazorDynamicIndex;
 
 public static class DynamicIndexGenerator
 {
-	public static async Task<string> Generate(DynamicIndexConfiguration configuration, string contentRootPath)
+	public static async Task<string> Generate(DynamicIndexConfiguration configuration, IFileProvider webRootFileProvider)
 	{
 		StringBuilder builder = new();
 
@@ -88,10 +89,14 @@ public static class DynamicIndexGenerator
 
 		if (!string.IsNullOrEmpty(configuration.BodyFile))
 		{
-			string bodyFilePath = Path.Combine(contentRootPath, configuration.BodyFile);
-			await using FileStream bodyFileStream = File.OpenRead(bodyFilePath);
-			using StreamReader bodyStreamReader = new(bodyFileStream, Encoding.UTF8);
-			builder.AppendLine((await bodyStreamReader.ReadToEndAsync()).Trim());
+			IFileInfo? bodyFile = webRootFileProvider.GetFileInfo(configuration.BodyFile);
+
+			if (bodyFile is { Exists: true })
+			{
+				await using FileStream bodyFileStream = File.OpenRead(bodyFile.PhysicalPath);
+				using StreamReader bodyStreamReader = new(bodyFileStream, Encoding.UTF8);
+				builder.AppendLine((await bodyStreamReader.ReadToEndAsync()).Trim());
+			}
 		}
 
 		if (configuration.PreFrameworkScripts.Any())

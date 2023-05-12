@@ -1,0 +1,26 @@
+﻿{
+  "Lang": "en",
+  "Viewport": "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
+  "Base": "/",
+  "Title": "DemoApp",
+  "BodyFile": "body.html",
+  "FrameworkScript": {
+    "Source": "_framework/blazor.webassembly.js"
+  },
+  "StyleSheets": [
+    {
+      "Source": "css/bootstrap/bootstrap.min.css"
+    },
+    {
+      "Source": "css/app.css"
+    },
+    {
+      "Source": "DemoApp.Client.styles.css"
+    }
+  ],
+  "Icons": [
+    {
+      "Source": "favicon.png"
+    }
+  ]
+}

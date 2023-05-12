@@ -1,9 +1,9 @@
-﻿namespace BlazorDynamicIndex;
-
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+
+namespace BlazorDynamicIndex;
 
 public static class EndpointRouteBuilderExtensions
 {

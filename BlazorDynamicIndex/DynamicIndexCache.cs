@@ -1,6 +1,6 @@
-﻿namespace BlazorDynamicIndex;
+﻿using System.Text;
 
-using System.Text;
+namespace BlazorDynamicIndex;
 
 public class DynamicIndexCache
 {

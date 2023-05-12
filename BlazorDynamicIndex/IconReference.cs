@@ -2,8 +2,5 @@
 
 public class IconReference : ContentReference
 {
-	public override string HtmlElement
-	{
-		get { return $"<link rel=\"icon\" href=\"{this.PrefixedSource}\" />"; }
-	}
+	public override string HtmlElement => $"<link rel=\"icon\" href=\"{this.PrefixedSource}\" />";
 }

@@ -1,6 +1,6 @@
-﻿namespace BlazorDynamicIndex;
+﻿using System.Text.Json;
 
-using System.Text.Json;
+namespace BlazorDynamicIndex;
 
 public class DynamicIndexConfiguration
 {
@@ -33,10 +33,10 @@ public class DynamicIndexConfiguration
 		return JsonSerializer.DeserializeAsync<DynamicIndexConfiguration>(utf8Json, cancellationToken: cancellationToken);
 	}
 
-	public static async ValueTask<DynamicIndexConfiguration?> FromFileAsync(string filePath, CancellationToken cancellationToken = default)
+	public static async ValueTask<DynamicIndexConfiguration> FromFileAsync(string filePath, CancellationToken cancellationToken = default)
 	{
 		await using Stream utf8Json = File.OpenRead(filePath);
-		DynamicIndexConfiguration? configuration = await DynamicIndexConfiguration.FromJsonAsync(utf8Json, cancellationToken);
+		DynamicIndexConfiguration configuration = (await DynamicIndexConfiguration.FromJsonAsync(utf8Json, cancellationToken))!;
 		return configuration;
 	}
 }

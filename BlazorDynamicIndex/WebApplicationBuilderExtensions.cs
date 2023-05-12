@@ -1,29 +1,30 @@
-﻿namespace BlazorDynamicIndex;
-
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
+
+namespace BlazorDynamicIndex;
 
 public static class WebApplicationBuilderExtensions
 {
-	public static async Task GenerateDynamicIndex(this WebApplicationBuilder builder,
-		Action<DynamicIndexConfiguration>? overrideIndexConfiguration = null,
-		Action<DynamicIndexOptions>? configureOptions = null)
+	public static async Task AddDynamicIndex(this WebApplicationBuilder builder,
+		Action<DynamicIndexOptions>? configureOptions = null,
+		Action<DynamicIndexConfiguration>? overrideIndexConfiguration = null)
 	{
-		DynamicIndexOptions options = new();
-		builder.Configuration.GetSection(DynamicIndexOptions.ConfigurationSection).Bind(options);
-		configureOptions?.Invoke(options);
+		DynamicIndexOptions dynamicIndexOptions = builder.Configuration.GetSection(DynamicIndexOptions.ConfigurationSection).Get<DynamicIndexOptions>() ??
+												new DynamicIndexOptions();
+		configureOptions?.Invoke(dynamicIndexOptions);
 
-		string configurationFilePath = Path.Combine(builder.Environment.ContentRootPath, options.ConfigurationFile);
+		IFileProvider webRootFileProvider = builder.Environment.WebRootFileProvider;
+		IFileInfo? indexConfigurationFile = webRootFileProvider.GetFileInfo(dynamicIndexOptions.ConfigurationFile);
 
-		DynamicIndexConfiguration? indexConfiguration = await DynamicIndexConfiguration.FromFileAsync(configurationFilePath);
-
-		if (overrideIndexConfiguration != null)
+		if (indexConfigurationFile is { Exists: true })
 		{
-			overrideIndexConfiguration(indexConfiguration);
-		}
+			DynamicIndexConfiguration indexConfiguration = await DynamicIndexConfiguration.FromFileAsync(indexConfigurationFile.PhysicalPath);
+			overrideIndexConfiguration?.Invoke(indexConfiguration);
 
-		string indexContent = await DynamicIndexGenerator.Generate(indexConfiguration, builder.Environment.ContentRootPath);
-		builder.Services.AddSingleton(new DynamicIndexCache(options.IndexFileName, indexContent));
+			string indexContent = await DynamicIndexGenerator.Generate(indexConfiguration, webRootFileProvider);
+			builder.Services.AddSingleton(new DynamicIndexCache(dynamicIndexOptions.IndexFileName, indexContent));
+		}
 	}
 }
