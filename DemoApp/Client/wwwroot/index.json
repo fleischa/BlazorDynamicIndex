@@ -4,9 +4,6 @@
   "Base": "/",
   "Title": "DemoApp",
   "BodyFile": "body.html",
-  "FrameworkScript": {
-    "Source": "_framework/blazor.webassembly.js"
-  },
   "StyleSheets": [
     {
       "Source": "css/bootstrap/bootstrap.min.css"

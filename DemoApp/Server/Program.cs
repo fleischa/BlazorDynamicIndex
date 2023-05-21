@@ -1,10 +1,10 @@
 using BlazorDynamicIndex;
 
-namespace DemoApp;
+namespace DemoApp.Server;
 
 public class Program
 {
-	public static async Task Main(string[] args)
+	public static void Main(string[] args)
 	{
 		WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +13,7 @@ public class Program
 		builder.Services.AddControllersWithViews();
 		builder.Services.AddRazorPages();
 
-		await builder.AddDynamicIndex();
+		builder.AddDynamicIndex();
 
 		WebApplication app = builder.Build();
 
@@ -39,7 +39,6 @@ public class Program
 		app.MapRazorPages();
 		app.MapControllers();
 
-		//app.MapFallbackToFile("index.html");
 		app.MapFallbackToDynamicIndex();
 
 		app.Run();
