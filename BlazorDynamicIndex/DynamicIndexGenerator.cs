@@ -28,9 +28,10 @@ public static class DynamicIndexGenerator
 
 		builder.AppendLine("<meta charset=\"utf-8\" />");
 
-		if (!string.IsNullOrEmpty(configuration.Viewport))
+		if (configuration.Viewport != string.Empty)
 		{
-			builder.AppendLine($"<meta name=\"viewport\" content=\"{configuration.Viewport}\" />");
+			string viewport = configuration.Viewport ?? "width=device-width, initial-scale=1";
+			builder.AppendLine($"<meta name=\"viewport\" content=\"{viewport}\" />");
 		}
 
 		if (!string.IsNullOrEmpty(configuration.Title))
@@ -49,7 +50,6 @@ public static class DynamicIndexGenerator
 
 		if (configuration.Icons.Any())
 		{
-			builder.AppendLine("<!-- Icons -->");
 			foreach (IconReference icon in configuration.Icons)
 			{
 				builder.AppendLine(icon.HtmlElement);
@@ -58,34 +58,29 @@ public static class DynamicIndexGenerator
 
 		if (configuration.StyleSheets.Any())
 		{
-			builder.AppendLine("<!-- Style Sheets -->");
 			foreach (StyleSheetReference styleSheet in configuration.StyleSheets)
 			{
 				builder.AppendLine(styleSheet.HtmlElement);
 			}
 		}
 
-		if (configuration.HeadScripts.Any())
+		if (configuration.AsyncScripts.Any())
 		{
-			builder.AppendLine("<!-- Head Scripts -->");
-			foreach (ScriptReference script in configuration.HeadScripts)
+			foreach (AsyncScriptReference script in configuration.AsyncScripts)
+			{
+				builder.AppendLine(script.HtmlElement);
+			}
+		}
+
+		if (configuration.DeferScripts.Any())
+		{
+			foreach (DeferScriptReference script in configuration.DeferScripts)
 			{
 				builder.AppendLine(script.HtmlElement);
 			}
 		}
 
 		builder.AppendLine("</head>");
-
-		builder.AppendLine("<body>");
-
-		if (configuration.PreBodyScripts.Any())
-		{
-			builder.AppendLine("<!-- Pre Body Scripts -->");
-			foreach (ScriptReference script in configuration.PreBodyScripts)
-			{
-				builder.AppendLine(script.HtmlElement);
-			}
-		}
 
 		if (!string.IsNullOrEmpty(configuration.BodyFile))
 		{
@@ -97,36 +92,15 @@ public static class DynamicIndexGenerator
 				using StreamReader bodyStreamReader = new(bodyFileStream, Encoding.UTF8);
 				builder.AppendLine((await bodyStreamReader.ReadToEndAsync()).Trim());
 			}
-		}
-
-		if (configuration.PreFrameworkScripts.Any())
-		{
-			builder.AppendLine("<!-- Pre Blazor Framework Scripts -->");
-			foreach (ScriptReference script in configuration.PreFrameworkScripts)
+			else
 			{
-				builder.AppendLine(script.HtmlElement);
+				throw new InvalidOperationException();
 			}
-		}
-
-		if (configuration.FrameworkScript != null)
-		{
-			builder.AppendLine(configuration.FrameworkScript.HtmlElement);
 		}
 		else
 		{
-			builder.AppendLine("<script src=\"_framework/blazor.webassembly.js\"></script>");
+			builder.AppendLine("<body id=\"app\"></body>");
 		}
-
-		if (configuration.PostFrameworkScripts.Any())
-		{
-			builder.AppendLine("<!-- Post Blazor Framework Scripts -->");
-			foreach (ScriptReference script in configuration.PostFrameworkScripts)
-			{
-				builder.AppendLine(script.HtmlElement);
-			}
-		}
-
-		builder.AppendLine("</body>");
 
 		builder.AppendLine("</html>");
 

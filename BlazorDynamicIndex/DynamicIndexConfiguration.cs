@@ -18,15 +18,9 @@ public class DynamicIndexConfiguration
 
 	public List<IconReference> Icons { get; set; } = new();
 
-	public List<ScriptReference> HeadScripts { get; set; } = new();
+	public List<AsyncScriptReference> AsyncScripts { get; set; } = new();
 
-	public List<ScriptReference> PreBodyScripts { get; set; } = new();
-
-	public List<ScriptReference> PreFrameworkScripts { get; set; } = new();
-
-	public ScriptReference? FrameworkScript { get; set; }
-
-	public List<ScriptReference> PostFrameworkScripts { get; set; } = new();
+	public List<DeferScriptReference> DeferScripts { get; set; } = new();
 
 	public static ValueTask<DynamicIndexConfiguration?> FromJsonAsync(Stream utf8Json, CancellationToken cancellationToken = default)
 	{

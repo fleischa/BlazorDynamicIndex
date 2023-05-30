@@ -6,7 +6,30 @@ public abstract class ContentReference
 
 	public string? Assembly { get; set; }
 
-	public string PrefixedSource => (string.IsNullOrEmpty(this.Assembly) ? this.Source : $"_content/{this.Assembly}/{this.Source}") ?? string.Empty;
+	public bool IsFramework { get; set; }
+
+	public string PrefixedSource
+	{
+		get
+		{
+			if (string.IsNullOrEmpty(this.Source))
+			{
+				throw new ArgumentOutOfRangeException();
+			}
+
+			if (this.IsFramework)
+			{
+				return $"_framework/{this.Source}";
+			}
+
+			if (!string.IsNullOrEmpty(this.Assembly))
+			{
+				return $"_content/{this.Assembly}/{this.Source}";
+			}
+
+			return this.Source;
+		}
+	}
 
 	public abstract string HtmlElement { get; }
 }
