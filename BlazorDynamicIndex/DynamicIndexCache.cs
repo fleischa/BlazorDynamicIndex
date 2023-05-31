@@ -1,9 +1,9 @@
-﻿using System.Text;
+﻿namespace BlazorDynamicIndex;
+
+using System.Text;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
-
-namespace BlazorDynamicIndex;
 
 public class DynamicIndexCache
 {
@@ -35,6 +35,10 @@ public class DynamicIndexCache
 			this.OverrideIndexConfiguration?.Invoke(indexConfiguration);
 			string indexContent = await DynamicIndexGenerator.Generate(indexConfiguration, webRootFileProvider);
 			this.CachedIndexResponse = new DynamicIndexResponse(indexContent, Encoding.UTF8.GetByteCount(indexContent));
+		}
+		else
+		{
+			throw new FileNotFoundException("Could not find index configuration file", indexConfigurationFile?.PhysicalPath ?? string.Empty);
 		}
 
 		return this.CachedIndexResponse;

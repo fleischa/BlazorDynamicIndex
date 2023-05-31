@@ -1,8 +1,8 @@
-﻿using System.Diagnostics;
+﻿namespace DemoApp.Server.Pages;
+
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
-namespace DemoApp.Server.Pages;
 
 [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 [IgnoreAntiforgeryToken]

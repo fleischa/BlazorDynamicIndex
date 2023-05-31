@@ -1,6 +1,7 @@
-﻿using System.Text.Json;
+﻿namespace BlazorDynamicIndex;
 
-namespace BlazorDynamicIndex;
+using System.Text.Json;
+using JetBrains.Annotations;
 
 public class DynamicIndexConfiguration
 {
@@ -14,12 +15,16 @@ public class DynamicIndexConfiguration
 
 	public string? BodyFile { get; set; }
 
+	[UsedImplicitly]
 	public List<StyleSheetReference> StyleSheets { get; set; } = new();
 
+	[UsedImplicitly]
 	public List<IconReference> Icons { get; set; } = new();
 
+	[UsedImplicitly]
 	public List<AsyncScriptReference> AsyncScripts { get; set; } = new();
 
+	[UsedImplicitly]
 	public List<DeferScriptReference> DeferScripts { get; set; } = new();
 
 	public static ValueTask<DynamicIndexConfiguration?> FromJsonAsync(Stream utf8Json, CancellationToken cancellationToken = default)

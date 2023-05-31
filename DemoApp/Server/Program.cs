@@ -1,21 +1,23 @@
-using BlazorDynamicIndex;
-
 namespace DemoApp.Server;
+
+using BlazorDynamicIndex;
 
 public class Program
 {
+	private const string pathBase = "/test/";
+
 	public static void Main(string[] args)
 	{
 		WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-		// Add services to the container.
-
 		builder.Services.AddControllersWithViews();
 		builder.Services.AddRazorPages();
 
-		builder.AddDynamicIndex();
+		builder.AddDynamicIndex(null, opt => opt.Base = Program.pathBase);
 
 		WebApplication app = builder.Build();
+
+		app.UsePathBase(Program.pathBase);
 
 		// Configure the HTTP request pipeline.
 		if (app.Environment.IsDevelopment())
@@ -25,7 +27,6 @@ public class Program
 		else
 		{
 			app.UseExceptionHandler("/Error");
-			// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 			app.UseHsts();
 		}
 

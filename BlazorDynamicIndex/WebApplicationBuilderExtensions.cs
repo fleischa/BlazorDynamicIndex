@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿namespace BlazorDynamicIndex;
+
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
-namespace BlazorDynamicIndex;
 
 public static class WebApplicationBuilderExtensions
 {

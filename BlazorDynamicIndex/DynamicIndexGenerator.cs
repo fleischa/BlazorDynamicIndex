@@ -1,8 +1,8 @@
-﻿using System.Reflection;
+﻿namespace BlazorDynamicIndex;
+
+using System.Reflection;
 using System.Text;
 using Microsoft.Extensions.FileProviders;
-
-namespace BlazorDynamicIndex;
 
 public static class DynamicIndexGenerator
 {
@@ -48,36 +48,24 @@ public static class DynamicIndexGenerator
 			builder.AppendLine($"<base href=\"{configuration.Base}\" />");
 		}
 
-		if (configuration.Icons.Any())
+		foreach (IconReference icon in configuration.Icons)
 		{
-			foreach (IconReference icon in configuration.Icons)
-			{
-				builder.AppendLine(icon.HtmlElement);
-			}
+			builder.AppendLine(icon.HtmlElement);
 		}
 
-		if (configuration.StyleSheets.Any())
+		foreach (StyleSheetReference styleSheet in configuration.StyleSheets)
 		{
-			foreach (StyleSheetReference styleSheet in configuration.StyleSheets)
-			{
-				builder.AppendLine(styleSheet.HtmlElement);
-			}
+			builder.AppendLine(styleSheet.HtmlElement);
 		}
 
-		if (configuration.AsyncScripts.Any())
+		foreach (AsyncScriptReference script in configuration.AsyncScripts)
 		{
-			foreach (AsyncScriptReference script in configuration.AsyncScripts)
-			{
-				builder.AppendLine(script.HtmlElement);
-			}
+			builder.AppendLine(script.HtmlElement);
 		}
 
-		if (configuration.DeferScripts.Any())
+		foreach (DeferScriptReference script in configuration.DeferScripts)
 		{
-			foreach (DeferScriptReference script in configuration.DeferScripts)
-			{
-				builder.AppendLine(script.HtmlElement);
-			}
+			builder.AppendLine(script.HtmlElement);
 		}
 
 		builder.AppendLine("</head>");
