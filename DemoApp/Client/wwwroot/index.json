@@ -7,9 +7,10 @@
     { "Source": "DemoApp.Client.styles.css" }
   ],
   "Icons": [
-    { "Source": "favicon.png" }
+    { "Source": "favicon.png", "Assembly": "DemoApp.Styles" }
   ],
   "DeferScripts": [
     { "Source": "blazor.webassembly.js", "IsFramework": true }
-  ]
+  ],
+  "BodyFile": "body.html"
 }
