@@ -2,25 +2,14 @@
   "Lang": "en",
   "Title": "DemoApp",
   "StyleSheets": [
-    {
-      "Source": "css/bootstrap/bootstrap.min.css"
-    },
-    {
-      "Source": "css/app.css"
-    },
-    {
-      "Source": "DemoApp.Client.styles.css"
-    }
+    { "Source": "css/bootstrap/bootstrap.min.css", "Assembly": "DemoApp.Styles" },
+    { "Source": "css/app.css", "Assembly": "DemoApp.Styles" },
+    { "Source": "DemoApp.Client.styles.css" }
   ],
   "Icons": [
-    {
-      "Source": "favicon.png"
-    }
+    { "Source": "favicon.png" }
   ],
   "DeferScripts": [
-    {
-      "IsFramework": true,
-      "Source": "blazor.webassembly.js"
-    }
+    { "Source": "blazor.webassembly.js", "IsFramework": true }
   ]
 }
