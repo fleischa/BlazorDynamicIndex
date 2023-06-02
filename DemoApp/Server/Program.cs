@@ -1,11 +1,9 @@
-namespace DemoApp.Server;
-
 using BlazorDynamicIndex;
 
-public class Program
-{
-	private const string pathBase = "/test/";
+namespace DemoApp.Server;
 
+public static class Program
+{
 	public static void Main(string[] args)
 	{
 		WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -13,11 +11,9 @@ public class Program
 		builder.Services.AddControllersWithViews();
 		builder.Services.AddRazorPages();
 
-		builder.AddDynamicIndex(null, opt => opt.Base = Program.pathBase);
+		builder.AddDynamicIndex();
 
 		WebApplication app = builder.Build();
-
-		app.UsePathBase(Program.pathBase);
 
 		// Configure the HTTP request pipeline.
 		if (app.Environment.IsDevelopment())

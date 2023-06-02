@@ -1,9 +1,9 @@
-﻿namespace BlazorDynamicIndex;
-
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+
+namespace BlazorDynamicIndex;
 
 public static class EndpointRouteBuilderExtensions
 {
@@ -15,7 +15,7 @@ public static class EndpointRouteBuilderExtensions
 	private static async Task<Task> HandleRequest(HttpContext httpContext)
 	{
 		DynamicIndexCache dynamicIndexCache = httpContext.RequestServices.GetRequiredService<DynamicIndexCache>();
-		DynamicIndexResponse index = await dynamicIndexCache.GetIndex(httpContext.RequestServices);
+		DynamicIndexResponse index = await dynamicIndexCache.GetIndex(httpContext);
 
 		HttpResponse response = httpContext.Response;
 		response.ContentType = "text/html";

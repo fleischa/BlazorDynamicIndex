@@ -1,7 +1,7 @@
-﻿namespace BlazorDynamicIndex;
-
-using System.Text.Json;
+﻿using System.Text.Json;
 using JetBrains.Annotations;
+
+namespace BlazorDynamicIndex;
 
 public class DynamicIndexConfiguration
 {

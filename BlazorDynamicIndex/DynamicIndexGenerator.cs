@@ -1,8 +1,8 @@
-﻿namespace BlazorDynamicIndex;
-
-using System.Reflection;
+﻿using System.Reflection;
 using System.Text;
 using Microsoft.Extensions.FileProviders;
+
+namespace BlazorDynamicIndex;
 
 public static class DynamicIndexGenerator
 {

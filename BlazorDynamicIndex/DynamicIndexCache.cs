@@ -1,9 +1,10 @@
-﻿namespace BlazorDynamicIndex;
-
-using System.Text;
+﻿using System.Text;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+
+namespace BlazorDynamicIndex;
 
 public class DynamicIndexCache
 {
@@ -16,13 +17,14 @@ public class DynamicIndexCache
 
 	public DynamicIndexResponse? CachedIndexResponse { get; private set; }
 
-	public async Task<DynamicIndexResponse> GetIndex(IServiceProvider serviceProvider)
+	public async Task<DynamicIndexResponse> GetIndex(HttpContext httpContext)
 	{
 		if (this.CachedIndexResponse != null)
 		{
 			return this.CachedIndexResponse;
 		}
 
+		IServiceProvider serviceProvider = httpContext.RequestServices;
 		DynamicIndexOptions dynamicIndexOptions = serviceProvider.GetRequiredService<DynamicIndexOptions>();
 		IWebHostEnvironment environment = serviceProvider.GetRequiredService<IWebHostEnvironment>();
 
@@ -33,6 +35,9 @@ public class DynamicIndexCache
 		{
 			DynamicIndexConfiguration indexConfiguration = await DynamicIndexConfiguration.FromFileAsync(indexConfigurationFile.PhysicalPath);
 			this.OverrideIndexConfiguration?.Invoke(indexConfiguration);
+
+			indexConfiguration.Base ??= $"{httpContext.Request.PathBase.ToString().TrimEnd('/')}/";
+
 			string indexContent = await DynamicIndexGenerator.Generate(indexConfiguration, webRootFileProvider);
 			this.CachedIndexResponse = new DynamicIndexResponse(indexContent, Encoding.UTF8.GetByteCount(indexContent));
 		}
