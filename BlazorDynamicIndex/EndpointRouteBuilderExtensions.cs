@@ -12,6 +12,11 @@ public static class EndpointRouteBuilderExtensions
 		return endpointRouteBuilder.MapFallback(EndpointRouteBuilderExtensions.HandleRequest);
 	}
 
+	public static IEndpointConventionBuilder MapFallbackToDynamicIndex(this IEndpointRouteBuilder endpointRouteBuilder, string pattern)
+	{
+		return endpointRouteBuilder.MapFallback(pattern, EndpointRouteBuilderExtensions.HandleRequest);
+	}
+
 	private static async Task<Task> HandleRequest(HttpContext httpContext)
 	{
 		DynamicIndexCache dynamicIndexCache = httpContext.RequestServices.GetRequiredService<DynamicIndexCache>();
