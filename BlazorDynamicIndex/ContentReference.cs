@@ -1,14 +1,31 @@
-﻿namespace BlazorDynamicIndex;
+﻿using JetBrains.Annotations;
+
+namespace BlazorDynamicIndex;
 
 public abstract class ContentReference
 {
-	public string? Source { get; set; }
+	public string? Source
+	{
+		get;
+		[UsedImplicitly]
+		set;
+	}
 
-	public string? Assembly { get; set; }
+	public string? Assembly
+	{
+		get;
+		[UsedImplicitly]
+		set;
+	}
 
-	public bool IsFramework { get; set; }
+	public bool IsFramework
+	{
+		get;
+		[UsedImplicitly]
+		set;
+	}
 
-	public string PrefixedSource
+	protected string PrefixedSource
 	{
 		get
 		{
