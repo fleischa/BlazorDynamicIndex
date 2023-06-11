@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using System.Text;
+﻿using System.Text;
 using Microsoft.Extensions.FileProviders;
 
 namespace BlazorDynamicIndex;

@@ -1,6 +1,4 @@
-﻿using JetBrains.Annotations;
-
-namespace BlazorDynamicIndex;
+﻿namespace BlazorDynamicIndex;
 
 [UsedImplicitly]
 public class IconReference : ContentReference

@@ -1,6 +1,4 @@
-﻿using JetBrains.Annotations;
-
-namespace BlazorDynamicIndex;
+﻿namespace BlazorDynamicIndex;
 
 public abstract class ContentReference
 {
